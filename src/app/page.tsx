@@ -1,6 +1,7 @@
 import ParticleBackground from "@/components/particle-effect-for-hero"
 import LetsWorkTogether from "@/components/lets-work-section"
 import ThemeToggle from "@/components/theme-toggle"
+import { InteractiveHoverLinks } from "@/components/interactive-hover-links"
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <section className="relative h-screen w-full overflow-hidden">
           <ParticleBackground />
         </section>
+        <InteractiveHoverLinks />
         <LetsWorkTogether />
       </div>
     </main>

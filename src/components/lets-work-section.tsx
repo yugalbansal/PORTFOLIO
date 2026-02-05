@@ -21,125 +21,139 @@ export default function LetsWorkTogether() {
   }
 
   const handleBookCall = () => {
-    window.open("https://cal.com/jatin-yadav05/15min", "_blank")
-  }
+  window.open("tel:+918901293583", "_self");
+};
 
   return (
     <section className="flex min-h-screen items-center justify-center bg-transparent px-6">
       <div className="relative flex flex-col items-center gap-12">
-        <div
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-8 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        {/* Success (intro call) view overlay */}
+<div
+  className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-8 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+  style={{
+    opacity: showSuccess ? 1 : 0,
+    transform: showSuccess ? "translateY(0) scale(1)" : "translateY(20px) scale(0.95)",
+    pointerEvents: showSuccess ? "auto" : "none",
+    cursor: showSuccess ? "pointer" : "default", // Shows pointer to indicate it's clickable to go back
+  }}
+  onClick={() => {
+    if (showSuccess) {
+      setShowSuccess(false);
+      setIsClicked(false);
+    }
+  }}
+>
+  {/* Wrap the content in a div and use e.stopPropagation() 
+      so clicking the text/button doesn't accidentally trigger the "back" click 
+      unless you want it to. */}
+  <div
+    className="flex flex-col items-center gap-8 cursor-default" 
+    onClick={(e) => e.stopPropagation()} 
+  >
+    <div className="flex flex-col items-center gap-2">
+      <span
+        className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground transition-all duration-500"
+        style={{
+          transform: showSuccess ? "translateY(0)" : "translateY(10px)",
+          opacity: showSuccess ? 1 : 0,
+          transitionDelay: "100ms",
+        }}
+      >
+        Perfect
+      </span>
+      <h3
+        className="text-3xl font-light tracking-tight text-foreground transition-all duration-500 sm:text-4xl"
+        style={{
+          transform: showSuccess ? "translateY(0)" : "translateY(10px)",
+          opacity: showSuccess ? 1 : 0,
+          transitionDelay: "200ms",
+        }}
+      >
+        Let's talk
+      </h3>
+    </div>
+
+    {/* Book a call button */}
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        handleBookCall();
+      }}
+      onMouseEnter={() => setIsButtonHovered(true)}
+      onMouseLeave={() => setIsButtonHovered(false)}
+      className="group relative flex items-center gap-4 transition-all duration-500 cursor-pointer"
+      style={{
+        transform: showSuccess
+          ? isButtonHovered
+            ? "translateY(0) scale(1.02)"
+            : "translateY(0) scale(1)"
+          : "translateY(15px) scale(1)",
+        opacity: showSuccess ? 1 : 0,
+        transitionDelay: "150ms",
+      }}
+    >
+      <div
+        className="h-px w-8 bg-border transition-all duration-500 sm:w-12"
+        style={{
+          transform: isButtonHovered ? "scaleX(0)" : "scaleX(1)",
+          opacity: isButtonHovered ? 0 : 0.5,
+        }}
+      />
+
+      <div
+        className="relative flex items-center gap-3 overflow-hidden rounded-full border px-6 py-3 transition-all duration-500 sm:px-8 sm:py-4"
+        style={{
+          borderColor: isButtonHovered ? "var(--foreground)" : "var(--border)",
+          backgroundColor: isButtonHovered ? "var(--foreground)" : "transparent",
+          boxShadow: isButtonHovered ? "0 0 30px rgba(0,0,0,0.1), 0 10px 40px rgba(0,0,0,0.08)" : "none",
+        }}
+      >
+        <Calendar
+          className="size-4 transition-all duration-500 sm:size-5"
+          strokeWidth={1.5}
           style={{
-            opacity: showSuccess ? 1 : 0,
-            transform: showSuccess ? "translateY(0) scale(1)" : "translateY(20px) scale(0.95)",
-            pointerEvents: showSuccess ? "auto" : "none",
+            color: isButtonHovered ? "var(--background)" : "var(--foreground)",
+          }}
+        />
+        <span
+          className="text-sm font-medium tracking-wide transition-all duration-500 sm:text-base"
+          style={{
+            color: isButtonHovered ? "var(--background)" : "var(--foreground)",
           }}
         >
-          {/* Elegant heading */}
-          <div className="flex flex-col items-center gap-2">
-            <span
-              className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground transition-all duration-500"
-              style={{
-                transform: showSuccess ? "translateY(0)" : "translateY(10px)",
-                opacity: showSuccess ? 1 : 0,
-                transitionDelay: "100ms",
-              }}
-            >
-              Perfect
-            </span>
-            <h3
-              className="text-3xl font-light tracking-tight text-foreground transition-all duration-500 sm:text-4xl"
-              style={{
-                transform: showSuccess ? "translateY(0)" : "translateY(10px)",
-                opacity: showSuccess ? 1 : 0,
-                transitionDelay: "200ms",
-              }}
-            >
-              Let's talk
-            </h3>
-          </div>
+          Book a call
+        </span>
+        <ArrowUpRight
+          className="size-4 transition-all duration-500 sm:size-5"
+          strokeWidth={1.5}
+          style={{
+            color: isButtonHovered ? "var(--background)" : "var(--foreground)",
+            transform: isButtonHovered ? "translate(3px, -3px) scale(1.1)" : "translate(0, 0) scale(1)",
+          }}
+        />
+      </div>
 
-          {/* Book a call button */}
-          <button
-            onClick={handleBookCall}
-            onMouseEnter={() => setIsButtonHovered(true)}
-            onMouseLeave={() => setIsButtonHovered(false)}
-            className="group relative flex items-center gap-4 transition-all duration-500 cursor-pointer"
-            style={{
-              transform: showSuccess
-                ? isButtonHovered
-                  ? "translateY(0) scale(1.02)"
-                  : "translateY(0) scale(1)"
-                : "translateY(15px) scale(1)",
-              opacity: showSuccess ? 1 : 0,
-              transitionDelay: "150ms",
-            }}
-          >
-            {/* Left line */}
-            <div
-              className="h-px w-8 bg-border transition-all duration-500 sm:w-12"
-              style={{
-                transform: isButtonHovered ? "scaleX(0)" : "scaleX(1)",
-                opacity: isButtonHovered ? 0 : 0.5,
-              }}
-            />
+      <div
+        className="h-px w-8 bg-border transition-all duration-500 sm:w-12"
+        style={{
+          transform: isButtonHovered ? "scaleX(0)" : "scaleX(1)",
+          opacity: isButtonHovered ? 0 : 0.5,
+        }}
+      />
+    </button>
 
-            {/* Button content */}
-            <div
-              className="relative flex items-center gap-3 overflow-hidden rounded-full border px-6 py-3 transition-all duration-500 sm:px-8 sm:py-4"
-              style={{
-                borderColor: isButtonHovered ? "var(--foreground)" : "var(--border)",
-                backgroundColor: isButtonHovered ? "var(--foreground)" : "transparent",
-                boxShadow: isButtonHovered ? "0 0 30px rgba(0,0,0,0.1), 0 10px 40px rgba(0,0,0,0.08)" : "none",
-              }}
-            >
-              <Calendar
-                className="size-4 transition-all duration-500 sm:size-5"
-                strokeWidth={1.5}
-                style={{
-                  color: isButtonHovered ? "var(--background)" : "var(--foreground)",
-                }}
-              />
-              <span
-                className="text-sm font-medium tracking-wide transition-all duration-500 sm:text-base"
-                style={{
-                  color: isButtonHovered ? "var(--background)" : "var(--foreground)",
-                }}
-              >
-                Book a call
-              </span>
-              <ArrowUpRight
-                className="size-4 transition-all duration-500 sm:size-5"
-                strokeWidth={1.5}
-                style={{
-                  color: isButtonHovered ? "var(--background)" : "var(--foreground)",
-                  transform: isButtonHovered ? "translate(3px, -3px) scale(1.1)" : "translate(0, 0) scale(1)",
-                }}
-              />
-            </div>
-
-            {/* Right line */}
-            <div
-              className="h-px w-8 bg-border transition-all duration-500 sm:w-12"
-              style={{
-                transform: isButtonHovered ? "scaleX(0)" : "scaleX(1)",
-                opacity: isButtonHovered ? 0 : 0.5,
-              }}
-            />
-          </button>
-
-          {/* Subtle subtext */}
-          <span
-            className="text-xs tracking-widest uppercase text-muted-foreground/50 transition-all duration-500"
-            style={{
-              transform: showSuccess ? "translateY(0)" : "translateY(10px)",
-              opacity: showSuccess ? 1 : 0,
-              transitionDelay: "450ms",
-            }}
-          >
-            15 min intro call
-          </span>
-        </div>
+    <span
+      className="text-xs tracking-widest uppercase text-muted-foreground/50 transition-all duration-500"
+      style={{
+        transform: showSuccess ? "translateY(0)" : "translateY(10px)",
+        opacity: showSuccess ? 1 : 0,
+        transitionDelay: "450ms",
+      }}
+    >
+      15 min intro call
+    </span>
+  </div>
+</div>
 
         <div
           className="flex items-center gap-3 transition-all duration-500"
@@ -255,7 +269,7 @@ export default function LetsWorkTogether() {
           <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
             Have a project in mind? I'd love to hear about it. Let's create something exceptional together.
           </p>
-          <span className="text-xs tracking-widest uppercase text-muted-foreground/60">hello@example.com</span>
+          <span className="text-xs tracking-widest uppercase text-muted-foreground/60">yugal@yugalbansal.in</span>
         </div>
       </div>
     </section>
